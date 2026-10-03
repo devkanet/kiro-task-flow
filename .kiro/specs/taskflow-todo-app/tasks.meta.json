@@ -12,6 +12,18 @@
         "chatSessionId": "sess_dcbbcdc5-4017-4bd7-85e2-baaa17dd50e3",
         "timestamp": 1790470214708
       }
+    ],
+    "3. ユーティリティ関数の実装": [
+      {
+        "executionId": "0f8d2940-c615-4d6d-819d-94fe7104e84e",
+        "chatSessionId": "sess_9c794dbc-21e0-4501-9090-dc534c15381d",
+        "timestamp": 1791002627749
+      },
+      {
+        "executionId": "0f8d2940-c615-4d6d-819d-94fe7104e84e",
+        "chatSessionId": "sess_9c794dbc-21e0-4501-9090-dc534c15381d",
+        "timestamp": 1791002814735
+      }
     ]
   }
 }

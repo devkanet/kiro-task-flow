@@ -18,13 +18,13 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - Design の Data Models セクションで定義されたフィールドと型を正確に反映する
   - _Requirements: 1.1, 3.2, 6.1_
 
-- [ ] 3. ユーティリティ関数の実装
+- [x] 3. ユーティリティ関数の実装
   - `src/utils/taskUtils.ts` に `filterTasks` と `generateId` を実装する
   - `filterTasks` は `FilterType` に応じて Task[] を純粋関数として絞り込む
   - `generateId` は `crypto.randomUUID()` を薄くラップする
   - _Requirements: 6.2, 6.3, 6.4_
 
-  - [ ] 3.1 taskUtils のテスト実装
+  - [x] 3.1 taskUtils のテスト実装
     - `src/utils/taskUtils.test.ts` を作成し、ユニットテストを実装する
     - ユニットテスト: `filterTasks` の「全件」「未完了」「完了済み」各フィルターの具体例
     - _Requirements: 6.2, 6.3, 6.4_
@@ -189,7 +189,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - アービトラリー: `taskArb`
     - _Requirements: 5.1, 5.2_
 
-  - [ ] 13.6 Property 6 — フィルタリングの正当性と網羅性
+  - [x] 13.6 Property 6 — フィルタリングの正当性と網羅性
     - `src/utils/taskUtils.test.ts` に追加する
     - `filterTasks` の結果がフィルター条件を満たし（精度）、条件を満たすタスクが漏れない（再現率）ことを検証する
     - アービトラリー: `fc.array(taskArb)`, `fc.constantFrom('all','pending','completed')`
