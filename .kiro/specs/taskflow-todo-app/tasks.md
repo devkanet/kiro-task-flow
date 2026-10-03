@@ -29,7 +29,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - ユニットテスト: `filterTasks` の「全件」「未完了」「完了済み」各フィルターの具体例
     - _Requirements: 6.2, 6.3, 6.4_
 
-- [ ] 4. ストレージユーティリティの実装
+- [x] 4. ストレージユーティリティの実装
   - `src/utils/storage.ts` に `saveTasks`・`loadTasks`・`isValidTaskList` を実装する
   - `saveTasks` は書き込み失敗時に例外を throw せず `{ ok: false }` を返す
   - `loadTasks` は成功時 `{ tasks: Task[] }`、失敗時 `{ error: 'parse' | 'schema' }` を返す
@@ -37,7 +37,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - `isValidTaskList` は配列および各要素のフィールド（id・title・description・dueDate・completed）の型を検証する
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
-  - [ ] 4.1 storage のテスト実装
+  - [x] 4.1 storage のテスト実装
     - `src/utils/storage.test.ts` を作成し、ユニットテストを実装する
     - ユニットテスト: 不正 JSON・スキーマ欠損・正常データの具体例、読み込みエラー時に localStorage が変更されないこと
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
