@@ -6,14 +6,14 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
 
 ## Tasks
 
-- [ ] 1. プロジェクト初期化
+- [x] 1. プロジェクト初期化
   - Vite + React + TypeScript テンプレートでプロジェクトを作成する
   - Vitest・React Testing Library・fast-check を開発依存として追加する
   - Vitest の設定（`vitest.config.ts` または `vite.config.ts`）と jsdom 環境を設定する
   - `src/` ディレクトリ以下に `components/`・`hooks/`・`utils/` の基本ディレクトリ構造を作成する
   - _Requirements: なし（プロジェクト基盤）_
 
-- [ ] 2. データモデルと型定義
+- [x] 2. データモデルと型定義
   - `src/types.ts` に `Task`・`TaskInput`・`FilterType` を定義する
   - Design の Data Models セクションで定義されたフィールドと型を正確に反映する
   - _Requirements: 1.1, 3.2, 6.1_
