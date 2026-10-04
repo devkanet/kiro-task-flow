@@ -1,0 +1,67 @@
+.dialog {
+  width: min(90vw, 24rem);
+  box-sizing: border-box;
+  padding: 1.5rem;
+  border: 1px solid #999;
+  border-radius: 8px;
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-size: 1.125rem;
+}
+
+.message {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.confirm,
+.cancel {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* キーボード操作時のみフォーカス位置を明示する */
+.confirm:focus-visible,
+.cancel:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.confirm {
+  background-color: #b00020;
+  color: #fff;
+  border: 1px solid #b00020;
+}
+
+.confirm:hover {
+  background-color: #8c0019;
+  border-color: #8c0019;
+}
+
+.cancel {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #999;
+}
+
+.cancel:hover {
+  background-color: #f1f3f4;
+  border-color: #666;
+}

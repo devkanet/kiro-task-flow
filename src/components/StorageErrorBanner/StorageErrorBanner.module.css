@@ -1,0 +1,21 @@
+.banner {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 1px solid #b00020;
+  border-radius: 4px;
+  background-color: #fdecea;
+  color: #611a15;
+}
+
+.heading {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.message {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}

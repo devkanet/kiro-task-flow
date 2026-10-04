@@ -1,0 +1,41 @@
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #f1f3f4;
+  border-color: #666;
+}
+
+/* キーボード操作時のみフォーカス位置を明示する */
+.button:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+/* アクティブなフィルターを視覚的に識別できるようにする */
+.button[aria-pressed='true'] {
+  background-color: #1a73e8;
+  color: #fff;
+  border-color: #1a73e8;
+  font-weight: 600;
+}
+
+.button[aria-pressed='true']:hover {
+  background-color: #1558b0;
+  border-color: #1558b0;
+}

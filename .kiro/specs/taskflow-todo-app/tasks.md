@@ -72,19 +72,19 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - ユニットテスト: 送信・キャンセル・バリデーションメッセージ表示の具体例
     - _Requirements: 1.3, 1.4, 3.4, 3.5_
 
-- [ ] 7. FilterBar コンポーネントの実装
+- [x] 7. FilterBar コンポーネントの実装
   - `src/components/FilterBar/FilterBar.tsx` を作成する
   - 「全件」「未完了」「完了済み」の 3 ボタンをレンダリングする
   - アクティブなフィルターのボタンに `aria-pressed="true"` を付与する
   - CSS Modules でスタイリングする
   - _Requirements: 6.1, 6.5, 8.1, 8.2_
 
-  - [ ] 7.1 FilterBar のテスト実装
+  - [x] 7.1 FilterBar のテスト実装
     - `src/components/FilterBar/FilterBar.test.tsx` を作成し、ユニットテストを実装する
     - フィルター切り替え時に `onChange` が呼ばれること、アクティブ状態の表示（`aria-pressed`）の確認
     - _Requirements: 6.1, 6.5_
 
-- [ ] 8. ConfirmDialog コンポーネントの実装
+- [x] 8. ConfirmDialog コンポーネントの実装
   - `src/components/ConfirmDialog/ConfirmDialog.tsx` を作成する
   - ネイティブ `<dialog>` 要素を使用する
   - 削除対象のタスクタイトルを表示する
@@ -92,12 +92,12 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - CSS Modules でスタイリングする
   - _Requirements: 4.1, 4.3, 8.1_
 
-  - [ ] 8.1 ConfirmDialog のテスト実装
+  - [x] 8.1 ConfirmDialog のテスト実装
     - `src/components/ConfirmDialog/ConfirmDialog.test.tsx` を作成し、ユニットテストを実装する
     - 承認・キャンセルボタンのインタラクション、タスクタイトルの表示確認
     - _Requirements: 4.1, 4.3_
 
-- [ ] 9. StorageErrorBanner コンポーネントの実装
+- [x] 9. StorageErrorBanner コンポーネントの実装
   - `src/components/StorageErrorBanner/StorageErrorBanner.tsx` を作成する
   - `error === 'load'` 時: localStorage の修復・クリアとページ再読み込みを案内するメッセージを表示する
   - `error === 'save'` 時: ページ再読み込みにより未保存の変更が失われる可能性がある旨を通知する
@@ -105,7 +105,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - CSS Modules でスタイリングする
   - _Requirements: 7.4, 7.5, 7.7, 8.2_
 
-  - [ ] 9.1 StorageErrorBanner のテスト実装
+  - [x] 9.1 StorageErrorBanner のテスト実装
     - `src/components/StorageErrorBanner/StorageErrorBanner.test.tsx` を作成し、ユニットテストを実装する
     - 読み込みエラー・書き込みエラー時のメッセージ表示、`role="alert"` と `aria-live="assertive"` の付与確認
     - _Requirements: 7.4, 7.5, 7.7_
