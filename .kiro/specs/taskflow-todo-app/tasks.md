@@ -110,7 +110,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - 読み込みエラー・書き込みエラー時のメッセージ表示、`role="alert"` と `aria-live="assertive"` の付与確認
     - _Requirements: 7.4, 7.5, 7.7_
 
-- [ ] 10. TaskItem コンポーネントの実装
+- [x] 10. TaskItem コンポーネントの実装
   - `src/components/TaskItem/TaskItem.tsx` を作成する
   - タイトル・説明（設定時のみ）・Due_Date（設定時のみ）・完了状態を表示する
   - 完了状態に応じてタイトルに打ち消し線スタイルを適用する
@@ -119,19 +119,19 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - CSS Modules でスタイリングする
   - _Requirements: 2.2, 4.1, 5.1, 5.2, 5.4, 8.2_
 
-  - [ ] 10.1 TaskItem のテスト実装
+  - [x] 10.1 TaskItem のテスト実装
     - `src/components/TaskItem/TaskItem.test.tsx` を作成し、ユニットテストを実装する
     - ユニットテスト: 完了切り替えボタン・編集ボタン・削除ボタンのインタラクション、説明・Due_Date の条件付き表示
     - _Requirements: 2.2, 5.1, 5.2, 8.2_
 
-- [ ] 11. TaskList コンポーネントの実装
+- [x] 11. TaskList コンポーネントの実装
   - `src/components/TaskList/TaskList.tsx` を作成する
   - フィルター適用済みの Task[] を受け取り、TaskItem を一覧レンダリングする
   - Task_List が空の場合は「タスクがありません」に相当する空状態メッセージを表示する
   - CSS Modules でスタイリングする
   - _Requirements: 2.1, 2.3, 2.4_
 
-  - [ ] 11.1 TaskList のテスト実装
+  - [x] 11.1 TaskList のテスト実装
     - `src/components/TaskList/TaskList.test.tsx` を作成し、ユニットテストを実装する
     - 空の Task_List での空状態メッセージ表示、Task が存在する場合の TaskItem レンダリング確認
     - _Requirements: 2.3_
