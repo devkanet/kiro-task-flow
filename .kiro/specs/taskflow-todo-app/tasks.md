@@ -42,7 +42,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - ユニットテスト: 不正 JSON・スキーマ欠損・正常データの具体例、読み込みエラー時に localStorage が変更されないこと
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
-- [ ] 5. useTaskStorage カスタム Hook の実装
+- [x] 5. useTaskStorage カスタム Hook の実装
   - `src/hooks/useTaskStorage.ts` を作成する
   - マウント時に `loadTasks()` を呼び出し、成功時は `Task[]`・エラー時は `storageError = 'load'` をセットする
   - `tasks` が `null`（初期化前 / 読み込みエラー）の間は `saveTasks()` を実行しない
@@ -51,7 +51,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - 戻り値は `[Task[] | null, (tasks: Task[]) => void, 'load' | 'save' | null]`
   - _Requirements: 7.1, 7.2, 7.4, 7.5, 7.7_
 
-  - [ ] 5.1 useTaskStorage のテスト実装
+  - [x] 5.1 useTaskStorage のテスト実装
     - `src/hooks/useTaskStorage.test.ts` を作成し、ユニットテストを実装する
     - 読み込み成功時に Task[] が返ること、読み込みエラー時に `storageError = 'load'` がセットされること
     - tasks 変更時に saveTasks が呼ばれること、書き込み失敗時に `storageError = 'save'` がセットされること
