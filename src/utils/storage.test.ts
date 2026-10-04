@@ -255,3 +255,126 @@ describe('loadTasks', () => {
     });
   });
 });
+
+// =======================================================================
+// Property-based tests (fast-check) — Task 13
+// =======================================================================
+
+import * as fc from 'fast-check';
+
+// 有効な Task を生成するアービトラリー。
+// Task スキーマ（id/title/description/dueDate: string, completed: boolean）を満たす。
+const taskArb: fc.Arbitrary<Task> = fc.record({
+  id: fc.string(),
+  title: fc.string(),
+  description: fc.string(),
+  dueDate: fc.string(),
+  completed: fc.boolean(),
+});
+
+// Feature: taskflow-todo-app, Property 4: localStorage ラウンドトリップ
+describe('Property 4: localStorage ラウンドトリップ', () => {
+  it('saveTasks で保存し loadTasks で読み込んだ結果は元の Task[] と深い等価性を持つ', () => {
+    // Validates: Requirements 7.1, 7.2, 7.3
+    fc.assert(
+      fc.property(fc.array(taskArb), (tasks) => {
+        localStorage.clear();
+        const saveResult = saveTasks(tasks);
+        expect(saveResult).toEqual({ ok: true });
+
+        const loadResult = loadTasks();
+        // JSON シリアライズ・デシリアライズを経ても元のデータと等価であること
+        expect(loadResult).toEqual({ tasks });
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+// Feature: taskflow-todo-app, Property 10: localStorage 読み込みエラー時のデータ保全
+describe('Property 10: localStorage 読み込みエラー時のデータ保全', () => {
+  it('不正 JSON が存在するとき loadTasks 後も localStorage は不変でエラーを返す', () => {
+    // Validates: Requirements 7.4, 7.5, 7.6
+    fc.assert(
+      fc.property(
+        // JSON としてパースできない文字列のみを生成する
+        fc.string().filter((s) => {
+          try {
+            JSON.parse(s);
+            return false; // パースできてしまうものは除外
+          } catch {
+            return true;
+          }
+        }),
+        (invalidJson) => {
+          localStorage.clear();
+          localStorage.setItem(STORAGE_KEY, invalidJson);
+
+          const result = loadTasks();
+
+          // 返り値はパースエラーを示す
+          expect(result).toEqual({ error: 'parse' });
+          // localStorage の値は呼び出し前と同一（変更・削除されない）
+          expect(localStorage.getItem(STORAGE_KEY)).toBe(invalidJson);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it('スキーマ不一致データが存在するとき loadTasks 後も localStorage は不変でエラーを返す', () => {
+    // Validates: Requirements 7.4, 7.5, 7.6
+    fc.assert(
+      fc.property(
+        // JSON としては有効だが Task[] スキーマを満たさない値を生成する
+        fc
+          .jsonValue()
+          .filter((value) => !isValidTaskList(value)),
+        (invalidSchemaValue) => {
+          localStorage.clear();
+          const raw = JSON.stringify(invalidSchemaValue);
+          localStorage.setItem(STORAGE_KEY, raw);
+
+          const result = loadTasks();
+
+          // 返り値はスキーマエラーを示す
+          expect(result).toEqual({ error: 'schema' });
+          // localStorage の値は呼び出し前と同一（変更・削除されない）
+          expect(localStorage.getItem(STORAGE_KEY)).toBe(raw);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
+
+// Feature: taskflow-todo-app, Property 11: localStorage 書き込み失敗時のメモリ状態保全
+describe('Property 11: localStorage 書き込み失敗時のメモリ状態保全', () => {
+  it('書き込みが失敗するとき saveTasks は { ok: false } を返し、メモリ上の Task_List は不変である', () => {
+    // Validates: Requirements 7.7
+    fc.assert(
+      fc.property(fc.array(taskArb), (tasks) => {
+        localStorage.clear();
+        vi.restoreAllMocks();
+
+        // localStorage への書き込みを失敗させる（容量超過等を模倣）
+        vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+          throw new DOMException('QuotaExceededError');
+        });
+
+        // 書き込み試行前のメモリ上の状態をスナップショットとして保持
+        const snapshot = structuredClone(tasks);
+
+        const result = saveTasks(tasks);
+
+        // 書き込み失敗を示す
+        expect(result).toEqual({ ok: false });
+        // メモリ上の Task_List は書き込み試行前と同一（saveTasks は引数を変更しない）
+        expect(tasks).toEqual(snapshot);
+
+        vi.restoreAllMocks();
+      }),
+      { numRuns: 100 }
+    );
+  });
+});

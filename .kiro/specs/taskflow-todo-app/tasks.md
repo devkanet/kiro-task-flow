@@ -153,37 +153,37 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - ユニットテスト: 読み込みエラー状態での `StorageErrorBanner` 全幅表示、書き込みエラー状態でのバナー表示
     - _Requirements: 1.1, 1.2, 3.2, 4.2, 7.4, 7.7_
 
-- [ ] 13. Property-based testing（fast-check）
+- [x] 13. Property-based testing（fast-check）
   - design.md の Correctness Properties 1〜11 を fast-check を使って実装する
   - 各プロパティテストは最小 100 回のイテレーションで実行する
   - 各テストには以下のコメントを付与する: `// Feature: taskflow-todo-app, Property {番号}: {プロパティの概要}`
   - _Requirements: 1.1, 1.3, 1.4, 3.2, 4.2, 5.1, 5.2, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3, 7.4, 7.7, 8.2_
 
-  - [ ] 13.1 Property 1 — 有効タスク追加によるリスト増加
+  - [x] 13.1 Property 1 — 有効タスク追加によるリスト増加
     - `src/App.test.tsx` または `src/utils/taskUtils.test.ts` に追加する
     - 有効な（空白のみでない）タイトルを持つ TaskInput を追加した後、リスト長が +1 になり追加タスクのフィールドが一致することを検証する
     - アービトラリー: `fc.array(taskArb)`, `fc.string()` (non-blank)
     - _Requirements: 1.1_
 
-  - [ ] 13.2 Property 2 — 空白タイトルの追加・編集拒否
+  - [x] 13.2 Property 2 — 空白タイトルの追加・編集拒否
     - `src/components/TaskForm/TaskForm.test.tsx` に追加する
     - 空白文字のみのタイトルを持つ TaskInput で追加・編集を試みても Task_List が変化しないことを検証する
     - アービトラリー: `fc.string()` filtered to whitespace-only
     - _Requirements: 1.3, 3.4_
 
-  - [ ] 13.3 Property 3 — タスク操作後のフォームリセット
+  - [x] 13.3 Property 3 — タスク操作後のフォームリセット
     - `src/components/TaskForm/TaskForm.test.tsx` に追加する
     - 有効な TaskInput を送信した後、フォームの全フィールドが空の初期値にリセットされることを検証する
     - アービトラリー: `fc.record({title, description, dueDate})`
     - _Requirements: 1.4_
 
-  - [ ] 13.4 Property 4 — localStorage ラウンドトリップ
+  - [x] 13.4 Property 4 — localStorage ラウンドトリップ
     - `src/utils/storage.test.ts` に追加する
     - 有効な Task[] を `saveTasks` で保存し `loadTasks` で読み込んだ結果が元の Task[] と深い等価性を持つことを検証する
     - アービトラリー: `fc.array(taskArb)`
     - _Requirements: 7.1, 7.2, 7.3_
 
-  - [ ] 13.5 Property 5 — 完了切り替えの双方向性
+  - [x] 13.5 Property 5 — 完了切り替えの双方向性
     - `src/components/TaskItem/TaskItem.test.tsx` または `src/App.test.tsx` に追加する
     - `toggleTask` を 2 回適用した結果の `completed` フラグが元の値と等しいこと、および 1 回適用で状態が反転することを検証する
     - アービトラリー: `taskArb`
@@ -195,31 +195,31 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - アービトラリー: `fc.array(taskArb)`, `fc.constantFrom('all','pending','completed')`
     - _Requirements: 6.2, 6.3, 6.4_
 
-  - [ ] 13.7 Property 7 — タスク編集後の同一性と更新
+  - [x] 13.7 Property 7 — タスク編集後の同一性と更新
     - `src/App.test.tsx` に追加する
     - `updateTask` 適用後のリスト長が不変で、対象タスクの `id` が変化せず、フィールドが新しい値に置き換えられることを検証する
     - アービトラリー: `fc.array(taskArb, {minLength: 1})`, `taskInputArb`
     - _Requirements: 3.2_
 
-  - [ ] 13.8 Property 8 — タスク削除後のリスト縮小と消去
+  - [x] 13.8 Property 8 — タスク削除後のリスト縮小と消去
     - `src/App.test.tsx` に追加する
     - `deleteTask` 適用後のリストに当該 `id` が存在せず、長さが 1 減少することを検証する
     - アービトラリー: `fc.array(taskArb, {minLength: 1})`
     - _Requirements: 4.2_
 
-  - [ ] 13.9 Property 9 — TaskItem の ARIA 属性と完了状態の対応
+  - [x] 13.9 Property 9 — TaskItem の ARIA 属性と完了状態の対応
     - `src/components/TaskItem/TaskItem.test.tsx` に追加する
     - `TaskItem` レンダリング時に完了切り替えコントロールの ARIA 属性が Task の `completed` フラグと一致することを検証する
     - アービトラリー: `taskArb` (completed true/false 両方)
     - _Requirements: 8.2_
 
-  - [ ] 13.10 Property 10 — localStorage 読み込みエラー時のデータ保全
+  - [x] 13.10 Property 10 — localStorage 読み込みエラー時のデータ保全
     - `src/utils/storage.test.ts` に追加する
     - 不正な JSON またはスキーマ不一致のデータが localStorage に存在するとき、`loadTasks()` 呼び出し後も localStorage の値が変化していないことを検証する
     - アービトラリー: `fc.string()` (non-JSON), `fc.object()` (invalid schema)
     - _Requirements: 7.4, 7.5_
 
-  - [ ] 13.11 Property 11 — localStorage 書き込み失敗時のメモリ状態保全
+  - [x] 13.11 Property 11 — localStorage 書き込み失敗時のメモリ状態保全
     - `src/utils/storage.test.ts` に追加する
     - localStorage の書き込みが失敗するとき、メモリ上の Task_List が変化せず `saveTasks()` が `{ ok: false }` を返すことを検証する
     - アービトラリー: `taskArb`, mocked localStorage write failure

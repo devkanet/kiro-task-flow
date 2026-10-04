@@ -248,3 +248,75 @@ describe('TaskItem 削除', () => {
     expect(screen.queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
   });
 });
+
+// =======================================================================
+// Property-based tests (fast-check) — Task 13
+// =======================================================================
+
+import { cleanup } from '@testing-library/react';
+import * as fc from 'fast-check';
+
+// 有効な Task を生成するアービトラリー（completed は true/false 両方）。
+const taskArb: fc.Arbitrary<Task> = fc.record({
+  id: fc.string(),
+  title: fc.string(),
+  description: fc.string(),
+  dueDate: fc.string(),
+  completed: fc.boolean(),
+});
+
+// App.toggleTask と同一の切り替えロジック（対象 Task の completed を反転する）。
+function toggleTask(task: Task): Task {
+  return { ...task, completed: !task.completed };
+}
+
+// Feature: taskflow-todo-app, Property 5: 完了切り替えの双方向性
+describe('Property 5: 完了切り替えの双方向性', () => {
+  test('toggleTask を 2 回適用すると completed は元の値に戻り、1 回適用で反転する', () => {
+    // Validates: Requirements 5.1, 5.2
+    fc.assert(
+      fc.property(taskArb, (task) => {
+        // 1 回適用で completed が反転する
+        const once = toggleTask(task);
+        expect(once.completed).toBe(!task.completed);
+
+        // 2 回適用で元の値に戻る（ラウンドトリップ）
+        const twice = toggleTask(once);
+        expect(twice.completed).toBe(task.completed);
+
+        // completed 以外のフィールドは変化しない
+        expect(once.id).toBe(task.id);
+        expect(once.title).toBe(task.title);
+        expect(once.description).toBe(task.description);
+        expect(once.dueDate).toBe(task.dueDate);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+// Feature: taskflow-todo-app, Property 9: TaskItem の ARIA 属性と完了状態の対応
+describe('Property 9: TaskItem の ARIA 属性と完了状態の対応', () => {
+  test('完了切り替えコントロールの状態が Task の completed フラグと一致する', () => {
+    // Validates: Requirements 8.2
+    fc.assert(
+      fc.property(taskArb, (task) => {
+        render(
+          <TaskItem
+            task={task}
+            onToggle={vi.fn()}
+            onEdit={vi.fn()}
+            onDelete={vi.fn()}
+          />
+        );
+
+        const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
+        // チェックボックスのチェック状態が completed フラグと一致する
+        expect(checkbox.checked).toBe(task.completed);
+
+        cleanup();
+      }),
+      { numRuns: 100 }
+    );
+  });
+});

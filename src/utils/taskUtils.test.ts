@@ -175,3 +175,56 @@ describe('Property 6: フィルタリングの正当性と網羅性', () => {
     );
   });
 });
+
+import { generateId } from './taskUtils';
+import type { TaskInput } from '../types';
+
+// 有効な（空白のみでない）タイトルを持つ TaskInput を生成するアービトラリー。
+const nonBlankTitleArb = fc.string().filter((s) => s.trim() !== '');
+
+const validTaskInputArb: fc.Arbitrary<TaskInput> = fc.record({
+  title: nonBlankTitleArb,
+  description: fc.string(),
+  dueDate: fc.string(),
+});
+
+// App.addTask と同一の追加ロジック（TaskInput から completed:false の Task を生成して末尾に追加）。
+// Task_List への追加操作をモデル化する。
+function addTask(tasks: Task[], input: TaskInput): Task[] {
+  const newTask: Task = {
+    id: generateId(),
+    title: input.title,
+    description: input.description,
+    dueDate: input.dueDate,
+    completed: false,
+  };
+  return [...tasks, newTask];
+}
+
+// Feature: taskflow-todo-app, Property 1: 有効タスク追加によるリスト増加
+describe('Property 1: 有効タスク追加によるリスト増加', () => {
+  test('有効な TaskInput を追加するとリスト長が +1 になり、追加タスクのフィールドが入力値と一致する', () => {
+    // Validates: Requirements 1.1
+    fc.assert(
+      fc.property(fc.array(taskArb), validTaskInputArb, (tasks, input) => {
+        const result = addTask(tasks, input);
+
+        // リスト長が元より 1 だけ大きい
+        expect(result.length).toBe(tasks.length + 1);
+
+        // 追加された Task のフィールドが TaskInput の値と一致する
+        const added = result[result.length - 1];
+        expect(added.title).toBe(input.title);
+        expect(added.description).toBe(input.description);
+        expect(added.dueDate).toBe(input.dueDate);
+        // 新規タスクは未完了で、生成された id を持つ
+        expect(added.completed).toBe(false);
+        expect(typeof added.id).toBe('string');
+
+        // 既存タスクはそのまま保持される
+        expect(result.slice(0, tasks.length)).toEqual(tasks);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});

@@ -349,3 +349,125 @@ describe('App 書き込みエラー', () => {
     ).toBeInTheDocument();
   });
 });
+
+// =======================================================================
+// Property-based tests (fast-check) — Task 13
+// =======================================================================
+
+import * as fc from 'fast-check';
+import type { TaskInput } from './types';
+
+// 有効な Task を生成するアービトラリー。
+const taskArb: fc.Arbitrary<Task> = fc.record({
+  id: fc.string(),
+  title: fc.string(),
+  description: fc.string(),
+  dueDate: fc.string(),
+  completed: fc.boolean(),
+});
+
+// 有効な TaskInput を生成するアービトラリー。
+const taskInputArb: fc.Arbitrary<TaskInput> = fc.record({
+  title: fc.string(),
+  description: fc.string(),
+  dueDate: fc.string(),
+});
+
+// App.updateTask と同一の更新ロジック（id 一致タスクの title/description/dueDate を置換、id/completed は維持）。
+function updateTask(tasks: Task[], id: string, input: TaskInput): Task[] {
+  return tasks.map((task) =>
+    task.id === id
+      ? {
+          ...task,
+          title: input.title,
+          description: input.description,
+          dueDate: input.dueDate,
+        }
+      : task
+  );
+}
+
+// App.deleteTask と同一の削除ロジック（id 一致タスクを除外）。
+function deleteTask(tasks: Task[], id: string): Task[] {
+  return tasks.filter((task) => task.id !== id);
+}
+
+// Feature: taskflow-todo-app, Property 7: タスク編集後の同一性と更新
+describe('Property 7: タスク編集後の同一性と更新', () => {
+  it('updateTask 適用後もリスト長は不変で、対象の id は変化せず、フィールドが新しい値に置き換わる', () => {
+    // Validates: Requirements 3.2
+    fc.assert(
+      fc.property(
+        fc.array(taskArb, { minLength: 1 }),
+        fc.nat(),
+        taskInputArb,
+        (tasks, rawIndex, input) => {
+          // 一意な id を保証して対象タスクを曖昧さなく特定できるようにする
+          const uniqueTasks = tasks.map((task, i) => ({
+            ...task,
+            id: `task-${i}`,
+          }));
+          const index = rawIndex % uniqueTasks.length;
+          const target = uniqueTasks[index];
+
+          const result = updateTask(uniqueTasks, target.id, input);
+
+          // リスト長は不変
+          expect(result.length).toBe(uniqueTasks.length);
+
+          const updated = result[index];
+          // 対象タスクの id は変化しない
+          expect(updated.id).toBe(target.id);
+          // completed も維持される
+          expect(updated.completed).toBe(target.completed);
+          // title/description/dueDate は新しい値に置き換わる
+          expect(updated.title).toBe(input.title);
+          expect(updated.description).toBe(input.description);
+          expect(updated.dueDate).toBe(input.dueDate);
+
+          // 対象以外のタスクは変化しない
+          result.forEach((task, i) => {
+            if (i !== index) {
+              expect(task).toEqual(uniqueTasks[i]);
+            }
+          });
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
+
+// Feature: taskflow-todo-app, Property 8: タスク削除後のリスト縮小と消去
+describe('Property 8: タスク削除後のリスト縮小と消去', () => {
+  it('deleteTask 適用後のリストに当該 id は存在せず、長さが 1 減少する', () => {
+    // Validates: Requirements 4.2
+    fc.assert(
+      fc.property(
+        fc.array(taskArb, { minLength: 1 }),
+        fc.nat(),
+        (tasks, rawIndex) => {
+          // 一意な id を保証して、削除対象を 1 件だけに限定する
+          const uniqueTasks = tasks.map((task, i) => ({
+            ...task,
+            id: `task-${i}`,
+          }));
+          const index = rawIndex % uniqueTasks.length;
+          const targetId = uniqueTasks[index].id;
+
+          const result = deleteTask(uniqueTasks, targetId);
+
+          // 長さが 1 減少する
+          expect(result.length).toBe(uniqueTasks.length - 1);
+          // 当該 id を持つ Task が存在しない
+          expect(result.some((task) => task.id === targetId)).toBe(false);
+          // 残りのタスクはすべて元のリストに含まれていたもの
+          result.forEach((task) => {
+            expect(uniqueTasks).toContainEqual(task);
+          });
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
