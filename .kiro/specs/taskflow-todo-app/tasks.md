@@ -136,7 +136,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - 空の Task_List での空状態メッセージ表示、Task が存在する場合の TaskItem レンダリング確認
     - _Requirements: 2.3_
 
-- [ ] 12. App コンポーネントの実装と統合
+- [x] 12. App コンポーネントの実装と統合
   - `src/App.tsx` を実装し、全コンポーネントを統合する
   - `useTaskStorage` から `[tasks, setTasks, storageError]` を受け取る
   - `filter`（`FilterType`）と `editingTask`（`Task | null`）を `useState` で管理する
@@ -148,7 +148,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - CSS Modules でスタイリングし、画面幅 320px 以上でレスポンシブに表示されることを確認する
   - _Requirements: 1.1, 1.2, 1.4, 2.1, 3.1, 3.2, 3.3, 3.5, 4.2, 4.3, 5.1, 5.2, 5.3, 6.1, 7.4, 7.5, 7.7_
 
-  - [ ] 12.1 App の統合テスト実装（ユニットテスト）
+  - [x] 12.1 App の統合テスト実装（ユニットテスト）
     - `src/App.test.tsx` を作成し、統合ユニットテストを実装する
     - ユニットテスト: 読み込みエラー状態での `StorageErrorBanner` 全幅表示、書き込みエラー状態でのバナー表示
     - _Requirements: 1.1, 1.2, 3.2, 4.2, 7.4, 7.7_
