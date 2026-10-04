@@ -1,0 +1,65 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.textarea {
+  min-height: 4rem;
+  resize: vertical;
+}
+
+.error {
+  margin: 0;
+  color: #b00020;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.submit,
+.cancel {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit {
+  background-color: #1a73e8;
+  color: #fff;
+  border: 1px solid #1a73e8;
+}
+
+.cancel {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #999;
+}

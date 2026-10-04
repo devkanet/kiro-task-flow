@@ -58,7 +58,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
     - tasks が null の間は saveTasks が呼ばれないこと
     - _Requirements: 7.1, 7.2, 7.4, 7.5, 7.7_
 
-- [ ] 6. TaskForm コンポーネントの実装
+- [x] 6. TaskForm コンポーネントの実装
   - `src/components/TaskForm/TaskForm.tsx` を作成する
   - `initialValues` が未指定の場合は新規作成モード、指定時は編集モードとして動作する
   - タイトルが空文字・空白のみの場合は送信を防止し「タイトルは必須です」バリデーションメッセージを表示する
@@ -67,7 +67,7 @@ Vite + React + TypeScript で構築するシングルページの ToDo アプリ
   - CSS Modules でスタイリングする
   - _Requirements: 1.1, 1.3, 1.4, 3.1, 3.4, 3.5, 8.1_
 
-  - [ ] 6.1 TaskForm のテスト実装
+  - [x] 6.1 TaskForm のテスト実装
     - `src/components/TaskForm/TaskForm.test.tsx` を作成し、ユニットテストを実装する
     - ユニットテスト: 送信・キャンセル・バリデーションメッセージ表示の具体例
     - _Requirements: 1.3, 1.4, 3.4, 3.5_
