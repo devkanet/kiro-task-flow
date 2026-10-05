@@ -192,7 +192,7 @@ It contains the project's Feature Spec, Steering document, Hook configuration, M
 
 ## Demo
 
-Demo video: [Add public demo video URL]
+Demo video: https://youtu.be/IapbbIspD7w
 
 ## Kiro University Challenge
 
